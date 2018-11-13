@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <form @submit.prevent="login">
-      <div>
+  <div class="container login">
+    <form @submit.prevent="login" class="card-panel">
+      <div class="field">
         <label for="user">User:</label>
         <input type="text" name="user" v-model="userName">
       </div>
-      <div>
+      <div class="field">
         <label for="pass">Password:</label>
         <input type="password" name="pass" v-model="userPass">
       </div>
-      <button type="submit">Zaloguj</button>
+      <button type="submit" class="btn">Zaloguj</button>
     </form>
   </div>
 </template>
@@ -40,4 +40,18 @@ export default {
   }
 }
 </script>
+
+<style>
+  .login {
+    max-width: 400px;
+    margin-top: 60px;
+  }
+  .login .field {
+    margin: 20px 0;
+    text-align: left
+  }
+  .login .btn {
+    margin-top: 25px;
+  }
+</style>
 
