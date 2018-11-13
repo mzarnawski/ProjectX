@@ -2,9 +2,7 @@ require('./config')
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const {ObjectID} = require('mongodb')
 
-var {mongoose} = require('./mongoose')
 var users = [
     {userName: 'user1', userPass: 'password', token: '', role: 'user'},
     {userName: 'admin', userPass: 'password1234', token: '12345', role: 'admin'}
