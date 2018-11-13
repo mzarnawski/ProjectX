@@ -1,10 +1,14 @@
 <template>
-  <div class="home">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/admin" v-show="userRole=='admin'">Admin</router-link>
-      <span v-show="userName">Witaj {{ userName }}</span>
-    </div>
+  <div class="container">
+    <nav class="home">
+      <div class="nav-wrapper menu">
+        <ul>
+          <li><router-link :to="{ name: 'home' }">Home</router-link></li>
+          <li v-show="userRole=='admin'"><router-link :to="{ name: 'admin' }">Admin</router-link></li>
+        </ul>
+        <span v-show="userName" class="welcome">Witaj {{ userName }}</span>
+      </div>
+    </nav>
   </div>
 </template>
 
@@ -21,3 +25,10 @@ export default {
   }
 }
 </script>
+
+<style>
+  .welcome {
+    text-align: center;
+  }
+</style>
+
