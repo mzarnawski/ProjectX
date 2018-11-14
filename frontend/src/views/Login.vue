@@ -9,6 +9,7 @@
         <label for="pass">Password:</label>
         <input type="password" name="pass" v-model="userPass">
       </div>
+      <p class="red-text center" v-show="msg">{{ msg }}</p>
       <button type="submit" class="btn">Zaloguj</button>
     </form>
   </div>
@@ -21,7 +22,8 @@ export default {
   data() {
     return {
       userName: localStorage.getItem('projectx_user'),
-      userPass: null
+      userPass: null,
+      msg: null
     }
   },
   methods: {
@@ -29,13 +31,22 @@ export default {
       backend.post('http://localhost:3000/login', {userName: this.userName, userPass: this.userPass})
       .then(res => {
         if(res.data.status == 'OK') {
+          this.msg = null
           localStorage.setItem('projectx_user', this.userName)
           localStorage.setItem('token', res.data.token)
           localStorage.setItem('role', res.data.role)
           this.$router.push({ name: 'home'})
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        if(err.response.status == 403) {
+          this.msg ='Błędny użytkownik lub hasło'
+        } else if (err.response.status == 400) {
+          this.msg = "Podaj użytkownika i hasło"
+        } else {
+          this.msg = "Błąd autoryzacji"
+        }
+      })
     }
   }
 }
