@@ -1,15 +1,11 @@
 require('./config')
+var {Users} = require('./users')
+var users = Users.credentials
 
 const express = require('express')
 const bodyParser = require('body-parser')
 
-var users = [
-    {userName: 'user1', userPass: 'password', token: '', role: 'user'},
-    {userName: 'admin', userPass: 'password1234', token: '12345', role: 'admin'}
-]
-
 var cors = require('cors')
-
 var app = express()
 const port = 3000
 
@@ -17,9 +13,12 @@ app.use(cors())
 app.use(bodyParser.json())
 
 app.post('/login', (req, res) => {
-    console.log(req)
     let user = req.body.userName
     let pass = req.body.userPass
+
+    if(!user || !pass) {
+        return res.status(400).send('Bad request')
+    }
 
     var foundUser = users.find((item) => {
         return item.userName === user && item.userPass === pass
@@ -41,8 +40,10 @@ var authorize_admin = (req, res, next) => {
 
     if (foundUser && foundUser.role === 'admin') {
         next()
+    } else if(foundUser && foundUser.role !== 'admin') {
+        res.status(403).send('Only admin access')
     } else {
-        res.status(401).send()
+        res.status(400).send('Bad request')
     }
 
 }
