@@ -1,4 +1,4 @@
 var env = process.env.NODE_ENV || 'development'
-console.log('env ******', env)
+console.log('ENV', env)
 
 process.env.PORT = 3000
