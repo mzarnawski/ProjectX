@@ -1,12 +1,15 @@
 <template>
   <div class="container">
-    <nav class="home">
+    <nav>
       <div class="nav-wrapper menu">
         <ul>
           <li><router-link :to="{ name: 'home' }">Home</router-link></li>
           <li v-show="userRole=='admin'"><router-link :to="{ name: 'admin' }">Admin</router-link></li>
         </ul>
-        <span v-show="userName" class="welcome">Witaj {{ userName }}</span>
+        <div class="welcome">
+          <span v-show="userName">Witaj, {{ userName }}</span>
+          <a href="" class="btn" v-show="userName" @click="logout">Wyloguj</a>
+        </div>
       </div>
     </nav>
   </div>
@@ -22,13 +25,24 @@ export default {
       userName: localStorage.getItem('projectx_user'),
       userRole: localStorage.getItem('role')
     }
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem('projectx_user')
+      localStorage.removeItem('role')
+      localStorage.removeItem('token')
+    }
   }
 }
 </script>
 
 <style>
   .welcome {
-    text-align: center;
+    float: right;
+    margin-right: 20px
+  }
+  .welcome span, .welcome a {
+    margin-left: 10px
   }
 </style>
 
